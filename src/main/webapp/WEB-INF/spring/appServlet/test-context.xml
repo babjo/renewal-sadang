@@ -13,26 +13,16 @@
 ">
 
     <context:component-scan base-package="org.lch"/>
-    <mvc:annotation-driven/>
     <tx:annotation-driven/>
-
-    <context:property-placeholder location="classpath:db.properties"/>
-
-    <!-- Enables swgger ui-->
-    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
-    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
-
-    <!-- Enables swgger-->
-    <bean class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration" id="swagger2Config"/>
 
     <!-- Exception translation bean post processor -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${jdbc.driver}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://mydbinstance.ckise045fl9p.ap-northeast-2.rds.amazonaws.com:3306/renewal-sadang"/>
+        <property name="username" value="babjo"/>
+        <property name="password" value="babjoyo!!"/>
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
