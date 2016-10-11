@@ -2,6 +2,7 @@ package security;
 
 import org.lch.domain.User;
 import org.lch.exception.JwtTokenMalformedException;
+import org.lch.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
@@ -14,6 +15,9 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public boolean supports(Class<?> authentication) {
@@ -35,6 +39,7 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
             throw new JwtTokenMalformedException();
         }
 
-        return parsedUser;
+        UserDetails userDetails = userService.loadUserByUsername(parsedUser.getEmail());
+        return userDetails;
     }
 }

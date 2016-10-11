@@ -19,6 +19,7 @@
     <bean id="jwtAuthenticationFilter" class="security.JwtAuthenticationFilter">
         <property name="authenticationManager" ref="authenticationManager" />
         <property name="authenticationSuccessHandler" ref="jwtAuthenticationSuccessHandler" />
+        <property name="authenticationFailureHandler" ref="jwtAuthenticationFailureHandler" />
     </bean>
 
     <security:authentication-manager alias="authenticationManager">

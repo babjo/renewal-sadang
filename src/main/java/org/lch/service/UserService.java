@@ -26,7 +26,7 @@ public class UserService{
     @Autowired
     private JwtUtil jwtUtil;
 
-    public SignUpResponseDTO signUp(SignUpRequestDTO signUpRequestDTO) {
+    public void signUp(SignUpRequestDTO signUpRequestDTO) {
         if(userRepository.findByEmail(signUpRequestDTO.getEmail()) != null)
             throw new UserExistException();
 
@@ -34,7 +34,6 @@ public class UserService{
         user.setEmail(signUpRequestDTO.getEmail());
         user.setPassword(signUpRequestDTO.getPassword());
         userRepository.save(user);
-        return new SignUpResponseDTO();
     }
 
     public SignInResponseDTO signIn(SignInRequestDTO signInRequestDTO) {
