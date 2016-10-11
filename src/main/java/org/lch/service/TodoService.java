@@ -2,6 +2,8 @@ package org.lch.service;
 
 import org.lch.domain.Todo;
 import org.lch.dto.AddTodoRequestDTO;
+import org.lch.dto.GetTodoListRequestDTO;
+import org.lch.dto.GetTodoListResponseDTO;
 import org.lch.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +24,9 @@ public class TodoService {
         todo.setContent(addTodoRequestDTO.getContent());
         todo.setUser(addTodoRequestDTO.getUser());
         todoRepository.save(todo);
+    }
+
+    public GetTodoListResponseDTO getTodoList(GetTodoListRequestDTO getTodoListRequestDTO) {
+        return new GetTodoListResponseDTO(todoRepository.findByUser(getTodoListRequestDTO.getUser()));
     }
 }

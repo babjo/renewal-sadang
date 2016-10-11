@@ -36,30 +36,4 @@ public class UserController {
         SignInResponseDTO signInResponseDTO = userService.signIn(signInRequestDTO);
         return new SuccessDTO(signInResponseDTO);
     }
-
-    @ExceptionHandler(Exception.class)
-    public @ResponseBody ExceptionDTO handleException(Exception ex) {
-        ExceptionDTO.Error error = new ExceptionDTO.Error();
-
-        if(ex instanceof MethodArgumentNotValidException){
-            BindingResult bindingResult = ((MethodArgumentNotValidException) ex).getBindingResult();
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            String defaultMessage = "";
-            for(ObjectError objectError : errors)
-                defaultMessage += objectError.toString() + "\n";
-            error.setMessage(defaultMessage);
-            error.setCode(400);
-        }else if(ex instanceof FailedLoginException){
-            error.setMessage(ex.getMessage());
-            error.setCode(401);
-        }else{
-            error.setMessage(ex.getMessage());
-            error.setCode(400);
-        }
-
-        ExceptionDTO exceptionDTO = new ExceptionDTO();
-        exceptionDTO.setError(error);
-        return exceptionDTO;
-
-    }
 }

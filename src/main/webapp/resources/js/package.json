@@ -1,0 +1,30 @@
+{
+  "name": "sadang-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "assert": "^1.4.0",
+    "chai": "^3.5.0",
+    "jsdom": "^9.2.0",
+    "mocha": "^2.5.3",
+    "requirejs": "^2.2.0",
+    "should": "^8.4.0"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.6.3",
+    "handlebars": "^4.0.5",
+    "jquery": "^2.2.4",
+    "less": "^2.7.1",
+    "moment": "^2.13.0",
+    "noto-sans-kr": "^0.1.1",
+    "underscore": "^1.8.3"
+  }
+}

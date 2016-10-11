@@ -1,0 +1,122 @@
+.sadang-todolist{
+  margin-top: 30px;
+
+  .today{
+    text-align: center;
+  }
+  .details{
+    text-align: center;
+    color: @gray-light;
+  }
+
+  .todo{
+    list-style-type: none;
+    padding-left: 0px;
+    margin: 0px 50px;
+
+    li{
+      margin-top: 13px;
+      margin-bottom: 13px;
+
+      &:hover{
+        cursor: pointer;
+      }
+
+      .content{
+        display: inline-block;
+        width: 89%;
+        font-size: 18px;
+
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+      }
+      .star-wrapper{
+        display: inline-block;
+        float: right;
+        margin-right: 10px;
+        color: @gray-light;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+
+        &.starred{
+          color : @bookmark;
+        }
+
+        &:hover{
+          color: @bookmark;
+        }
+      }
+
+      .trash-wrapper{
+        display: inline-block;
+        float: right;
+        margin-right: 10px;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+
+        &:hover{
+          color: @red;
+        }
+      }
+      .status-wrapper{
+        display: inline-block;
+        position: relative;
+        float: right;
+        width: 25px;
+        height: 25px;
+
+        .status{
+          background-color: @gray-light;
+          border-radius: 50%;
+          width: 25px;
+          height: 25px;
+
+          -webkit-transition: all 0.3s ease;
+          -moz-transition: all 0.3s ease;
+          -o-transition: all 0.3s ease;
+          transition: all 0.3s ease;
+
+
+          &:hover{
+            background-color: @mainColor;
+          }
+        }
+      }
+    }
+
+    .completed{
+      .content{
+        color: @gray-light;
+
+        position: relative;
+        z-index: 1;
+
+        &:before {
+          border-top: 2px solid #dfdfdf;
+          content:"";
+          position: absolute; /* positioning must be absolute here, and relative positioning must be applied to the parent */
+          top: 50%; left: 0; right: 0; bottom: 0;
+          width: 100%;
+          z-index: -1;
+        }
+
+        span {
+          /* to hide the lines from behind the text, you have to set the background color the same as the container */
+          background: #fff;
+          padding: 0 15px;
+        }
+      }
+      .status-wrapper {
+        .status {
+          background-color: @mainColor;
+        }
+      }
+    }
+  }
+}

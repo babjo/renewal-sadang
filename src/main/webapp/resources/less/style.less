@@ -1,0 +1,68 @@
+@import (css) "../js/node_modules/noto-sans-kr/styles.css";
+@import "signin";
+@import "signup";
+@import "sidebar";
+@import "sadang-todolist";
+
+@gray-darker:  lighten(#000, 13.5%); // #222
+@gray-dark:    lighten(#000, 20%);   // #333
+@gray:         lighten(#000, 33.5%); // #555
+@gray-light:   lighten(#000, 46.7%); // #777
+@gray-lighter: lighten(#000, 93.5%); // #eee
+
+@brand-primary: darken(#428bca, 6.5%); // #337ab7
+@brand-success: #5cb85c;
+@brand-info:    #5bc0de;
+@brand-warning: #f0ad4e;
+@brand-danger:  #d9534f;
+
+@mainColor : #58C9A0;
+@mainColor-darker : darken(@mainColor, 10%);
+
+@red : #F44336;
+@bookmark : #FFE135;
+
+body {
+  font-family: "Noto Sans Korean", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.is-Transformed {
+  width: 50%;
+  margin: auto;
+  position: absolute;
+  top: 50%; left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+.valign {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  /* vendor prefixes omitted due to brevity */
+}
+
+.sadang-btn{
+    background-color: @mainColor;
+    border-color: @mainColor-darker;
+
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+
+    &:hover, &:active, &:focus{
+      background-color: white !important;
+      border-color: @mainColor-darker !important;
+      color: @mainColor !important;
+    }
+}
+
+// Classes
+
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+.invisible {
+  visibility: hidden;
+}
