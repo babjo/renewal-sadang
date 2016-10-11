@@ -59,13 +59,13 @@ public class UserServiceTest {
         signUpAUser();
         SignInRequestDTO signInRequestDTO = new SignInRequestDTO("kd980311@naver.com", "1234");
         SignInResponseDTO signInResponseDTO = userService.signIn(signInRequestDTO);
-        assertNotNull(signInResponseDTO.getUser());
+        assertNotNull(signInResponseDTO.getToken());
     }
 
     @Test(expected = FailedLoginException.class)
     public void failedLoginException(){
         SignInRequestDTO signInRequestDTO = new SignInRequestDTO("kd980311@naver.com", "1234");
         SignInResponseDTO signInResponseDTO = userService.signIn(signInRequestDTO);
-        assertNotNull(signInResponseDTO.getUser());
+        assertNotNull(signInResponseDTO.getToken());
     }
 }

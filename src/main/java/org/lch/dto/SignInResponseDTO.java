@@ -10,5 +10,5 @@ import org.lch.domain.User;
 @Data
 @AllArgsConstructor
 public class SignInResponseDTO {
-    private User user;
+    private String token;
 }

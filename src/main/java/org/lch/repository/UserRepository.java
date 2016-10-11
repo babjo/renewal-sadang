@@ -2,16 +2,12 @@ package org.lch.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
 import org.hibernate.query.Query;
 import org.lch.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
-import static sun.security.krb5.Confounder.intValue;
-
 /**
  * Created by LCH on 2016. 10. 7..
  */
@@ -19,7 +15,7 @@ import static sun.security.krb5.Confounder.intValue;
 public class UserRepository {
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     public void save(User user){
         currentSession().save(user);
@@ -30,11 +26,11 @@ public class UserRepository {
     }
 
     public User findByEmail(String email) {
-        Query query = currentSession().createQuery("from User as user where user.email = :email");
+        Query query = currentSession().createQuery("from User as u where u.email = :email");
         query.setParameter("email", email);
-        List list = query.list();
+        List<User> list = query.getResultList();
         if(list.size() == 0) return null;
-        else return (User) list.get(0);
+        else return list.get(0);
     }
 
     private Session currentSession(){
@@ -42,11 +38,11 @@ public class UserRepository {
     }
 
     public User findByEmailAndPassword(String email, String password) {
-        Query query = currentSession().createQuery("from User as user where user.email = :email and user.password = :password");
+        Query query = currentSession().createQuery("from User as u where u.email = :email and u.password = :password");
         query.setParameter("email", email);
         query.setParameter("password", password);
-        List list = query.list();
+        List<User> list = query.getResultList();
         if(list.size() == 0) return null;
-        else return (User) list.get(0);
+        else return list.get(0);
     }
 }

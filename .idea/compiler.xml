@@ -26,7 +26,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="renewal-sadang" target="1.5" />
+      <module name="renewal-sadang" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
