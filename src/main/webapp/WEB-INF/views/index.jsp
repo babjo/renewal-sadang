@@ -13,6 +13,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="/resources/js/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/js/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/resources/less/style.less" type="text/css" rel="stylesheet/less">
@@ -37,9 +38,9 @@
                     <h1 class="form-signin-heading">Sadang</h1>
                     <p class="form-signin-description">당신의 일정을 관리하고 더 나은 삶을 살아보세요 !</p>
                     <label class="sr-only">Email</label>
-                    <input type="email" name="user_email" id="signin-email" class="form-control" placeholder="Email" required autofocus>
+                    <input type="email" name="user_email" id="signin-email" class="form-control" placeholder="Email" required autofocus value="kd980311@naver.com">
                     <label class="sr-only">Password</label>
-                    <input type="password" name="user_passwd" id="signin-passwd" class="form-control" placeholder="Password" required>
+                    <input type="password" name="user_passwd" id="signin-passwd" class="form-control" placeholder="Password" required value="1234">
                     <button class="btn btn-lg btn-primary btn-block sadang-btn" id="signin-js" >sign in</button>
                     <p><a id="go-signup-page-js" href="#">아직 회원이 아니시라면...</a></p>
                 </div>
@@ -57,7 +58,7 @@
                 <p class="form-signin-description">몇가지 입력으로 회원이 되실 수 있습니다!</p>
 
                 <label class="sr-only">Email</label>
-                <input type="email" name="user_email" id="signup-email" class="form-control" placeholder="Email" required autofocus value="${user_email}">
+                <input type="email" name="user_email" id="signup-email" class="form-control" placeholder="Email" required autofocus>
                 <label class="sr-only">Password</label>
                 <input type="password" name="user_passwd" id="signup-passwd" class="form-control" placeholder="Password" required>
 
@@ -82,10 +83,10 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-10">
-                    <input type="text" class="form-control add-todo-js" id="exampleInputAmount" placeholder="insert new task...">
+                    <input type="text" class="form-control" id="todo-content-js" placeholder="insert new task...">
                 </div>
                 <div class="col-xs-2">
-                    <button type="submit" class="btn btn-primary sadang-btn add-todo-btn-js">추가</button>
+                    <button class="btn btn-primary sadang-btn add-todo-btn-js">추가</button>
                 </div>
             </div>
             <div class="row">
@@ -137,14 +138,11 @@
         <a href="#">
             Sadang
         </a>
-        <a class="settings" href="logout">sign out</a>
+        <a class="settings" href="#" id="signout-js">sign out</a>
     </li>
+    {{#each categories}}
     <li>
-        <a class="{{active 'Total' currentCategory}} go-to-category-js" data-category="Total" href="#"><span class="icon"><i class="fa fa-list-ul fa-1" aria-hidden="true"></i></span><span class="category">Total</span></a>
-    </li>
-    {{#each data}}
-    <li>
-        <a class="{{active category_name ../currentCategory}} go-to-category-js" data-seq={{category_seq}} data-category={{category_name}} href="#"><span class="icon"><i class="fa {{icon category_name}} fa-1" aria-hidden="true"></i></span><span class="category">{{category_name}}</span></a>
+        <a class="{{active name ../current}} go-to-category-js" data-category={{name}} href="#"><span class="icon"><i class="fa {{icon name}} fa-1" aria-hidden="true"></i></span><span class="category">{{name}}</span></a>
     </li>
     {{/each}}
     <li>
@@ -161,8 +159,8 @@
             <ul class="todo">
                 {{#each todoList}}
                 <li class="clearfix {{completed complete}}">
-                    <div class="content">{{contents}}</div>
-                    <input type="hidden" id="todoId" value="{{todo_seq}}">
+                    <div class="content">{{content}}</div>
+                    <input type="hidden" id="todoId" value="{{todoId}}">
                     <input type="hidden" id="bookmark" value="{{bookmark}}">
                     <input type="hidden" id="complete" value="{{complete}}">
                     <div class="status-wrapper status-wrapper-js">
@@ -214,5 +212,6 @@
 <script src="/resources/js/src/handlebars-helpers.js" type="text/javascript"></script>
 <script src="/resources/js/src/UserApi.js" type="text/javascript"></script>
 <script src="/resources/js/src/TodoApi.js" type="text/javascript"></script>
+<script src="/resources/js/src/Store.js" type="text/javascript"></script>
 <script src="/resources/js/src/index.js" type="text/javascript"></script>
 </html>

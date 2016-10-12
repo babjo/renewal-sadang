@@ -50,7 +50,7 @@ function renderTodoPage(){
     var html = template();
     $('#sadang').html(html);
 
-    renderCategoryListCmp();
+    renderSidebarCmp();
     renderTodoListCmp();
 
     $("#menu-toggle").click(function (e) {
@@ -59,21 +59,42 @@ function renderTodoPage(){
     });
 }
 
+function renderSidebarCmp() {
+    var source = $("#category-template").html();
+    var template = Handlebars.compile(source);
+
+    var current = localStorage.getItem('current') || 'Total';
+    localStorage.setItem('current', current);
+    var html = template({categories :[{name:'Total'}, {name:'Bookmark'}, {name:'Done'}], current: current});
+    $('.sidebar-nav').html(html);
+
+    $('#signout-js').click(function(){
+        localStorage.clear();
+        renderSignInPage();
+    });
+}
+
 function renderTodoListCmp() {
     var source = $("#todolist-template").html();
     var template = Handlebars.compile(source);
 
-    //var data = sort(Store.data.my_todo, Store.currentCategory, Store.currentCategorySeq);
-    //console.log(data);
-    //var html = template({data: data});
-    var html = template();
-    $('.total-todolist').html(html);
+    refreshTodoList(template);
+
+    $('.add-todo-btn-js').click(function(e){
+        e.preventDefault();
+        var content = $('#todo-content-js').val();
+        TodoApi.add({content : content, category : localStorage.getItem('current')}, function(data){
+            refreshTodoList();
+        }, function(error){
+        });
+    });
 }
 
-function renderCategoryListCmp() {
-    var source = $("#category-template").html();
-    var template = Handlebars.compile(source);
-    //var html = template({data: Store.data.my_category, currentCategory: Store.currentCategory});
-    var html = template();
-    $('.sidebar-nav').html(html);
+function refreshTodoList(template) {
+    TodoApi.get({category: localStorage.getItem('current')}, function (data) {
+        var html = template({data: data});
+        $('.total-todolist').html(html);
+    }, function (error) {
+        alert(error.message);
+    });
 }

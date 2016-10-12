@@ -29,13 +29,13 @@ public class TodoRepository {
     }
 
     public List<Todo> findByUser(User user) {
-        Query query = currentSession().createQuery("select t.id, t.content, t.category from Todo as t where t.user = :user");
+        Query query = currentSession().createQuery("select NEW org.lch.domain.Todo(t.id, t.content, t.category, t.createAt) from Todo as t where t.user = :user");
         query.setParameter("user", user);
         return query.getResultList();
     }
 
     public List<Todo> findByUserAndCategory(User user, String category) {
-        Query query = currentSession().createQuery("select t.id, t.content, t.category from Todo as t where t.user = :user and t.category = :category");
+        Query query = currentSession().createQuery("select NEW org.lch.domain.Todo(t.id, t.content, t.category, t.createAt) from Todo as t where t.user = :user and t.category = :category");
         query.setParameter("user", user);
         query.setParameter("category", category);
         return query.getResultList();

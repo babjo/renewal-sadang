@@ -26,14 +26,14 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
-    @RequestMapping(method= RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody SuccessDTO addTodo(@RequestBody @Valid AddTodoRequestDTO addTodoRequestDTO){
         addTodoRequestDTO.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         todoService.addTodo(addTodoRequestDTO);
         return new SuccessDTO();
     }
 
-    @RequestMapping(value = "/{todoId}", method= RequestMethod.POST)
+    @RequestMapping(value = "/{todoId}", method = RequestMethod.POST)
     public @ResponseBody SuccessDTO modifyTodo(@PathVariable long todoId, @RequestBody @Valid ModifyTodoRequest modifyTodoRequest){
         modifyTodoRequest.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         modifyTodoRequest.setTodoId(todoId);
@@ -41,7 +41,7 @@ public class TodoController {
         return new SuccessDTO();
     }
 
-    @RequestMapping(value = "/{todoId}", method= RequestMethod.DELETE)
+    @RequestMapping(value = "/{todoId}", method = RequestMethod.DELETE)
     public @ResponseBody SuccessDTO removeTodo(@PathVariable long todoId){
         RemoveTodoRequestDTO removeTodoRequestDTO = new RemoveTodoRequestDTO();
         removeTodoRequestDTO.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
@@ -50,7 +50,7 @@ public class TodoController {
         return new SuccessDTO();
     }
 
-    @RequestMapping(method= RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody SuccessDTO getTodoList(GetTodoListRequestDTO getTodoListRequestDTO){
         getTodoListRequestDTO.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return new SuccessDTO(todoService.getTodoList(getTodoListRequestDTO));

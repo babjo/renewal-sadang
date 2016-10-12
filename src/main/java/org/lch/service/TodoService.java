@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created by LCH on 2016. 10. 11..
  */
@@ -19,6 +22,7 @@ public class TodoService {
 
     public void addTodo(AddTodoRequestDTO addTodoRequestDTO) {
         Todo todo = new Todo();
+        todo.setCreateAt(new Date());
         todo.setContent(addTodoRequestDTO.getContent());
         todo.setUser(addTodoRequestDTO.getUser());
         todo.setCategory(addTodoRequestDTO.getCategory());
@@ -26,10 +30,12 @@ public class TodoService {
     }
 
     public GetTodoListResponseDTO getTodoList(GetTodoListRequestDTO getTodoListRequestDTO) {
+        List<Todo> todoList;
         if(getTodoListRequestDTO.getCategory() == null)
-            return new GetTodoListResponseDTO(todoRepository.findByUser(getTodoListRequestDTO.getUser()));
+            todoList = todoRepository.findByUser(getTodoListRequestDTO.getUser());
         else
-            return new GetTodoListResponseDTO(todoRepository.findByUserAndCategory(getTodoListRequestDTO.getUser(), getTodoListRequestDTO.getCategory()));
+            todoList = todoRepository.findByUserAndCategory(getTodoListRequestDTO.getUser(), getTodoListRequestDTO.getCategory());
+        return new GetTodoListResponseDTO(todoList);
     }
 
     public void removeTodo(RemoveTodoRequestDTO removeTodoRequestDTO) {
