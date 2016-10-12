@@ -16,6 +16,7 @@ public class Todo {
     @Column(name = "TODO_ID")
     private long id;
     private String content;
+    private String category;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")

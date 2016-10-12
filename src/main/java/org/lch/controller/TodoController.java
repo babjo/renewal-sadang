@@ -1,10 +1,7 @@
 package org.lch.controller;
 
 import org.lch.domain.User;
-import org.lch.dto.AddTodoRequestDTO;
-import org.lch.dto.ExceptionDTO;
-import org.lch.dto.GetTodoListRequestDTO;
-import org.lch.dto.SuccessDTO;
+import org.lch.dto.*;
 import org.lch.exception.FailedLoginException;
 import org.lch.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +30,15 @@ public class TodoController {
     public @ResponseBody SuccessDTO addTodo(@RequestBody @Valid AddTodoRequestDTO addTodoRequestDTO){
         addTodoRequestDTO.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         todoService.addTodo(addTodoRequestDTO);
+        return new SuccessDTO();
+    }
+
+    @RequestMapping(value = "/{todoId}", method= RequestMethod.DELETE)
+    public @ResponseBody SuccessDTO removeTodo(@PathVariable String todoId){
+        RemoveTodoRequestDTO removeTodoRequestDTO = new RemoveTodoRequestDTO();
+        removeTodoRequestDTO.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        removeTodoRequestDTO.setTodoId(Integer.parseInt(todoId));
+        todoService.removeTodo(removeTodoRequestDTO);
         return new SuccessDTO();
     }
 

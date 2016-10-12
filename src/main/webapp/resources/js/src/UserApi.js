@@ -1,17 +1,34 @@
 var UserApi = {
-        login : function(email, password, cbSessionId){
-            var formData = {user_email : email, user_passwd : ''+password};
-
-            $.ajax({
-                url: "http://127.0.0.1:8080/midasWeb/loginCheck",
-                method: "POST",
-                data: formData,
-                dataType: "html",
-                success:function(data, textStatus, request){
-                    cbSessionId($(data).find('#session_id').val());
-                },
-                error:function(request, status, error){
+    signIn : function(email, password, cbSuccess, cbFailure){
+        var formData = {email : email, password : password};
+        $.ajax({
+            url: HOST + "/user/signIn",
+            method: "POST",
+            data: JSON.stringify(formData),
+            contentType: "application/json; charset=utf-8",
+            success:function(response){
+                if(response.error){
+                    cbFailure(response.error);
+                }else{
+                    cbSuccess(response.data);
                 }
-            });
-        }
-    };
+            }
+        });
+    },
+    signUp : function(email, password, cbSuccess, cbFailure){
+        var formData = {email : email, password : password};
+        $.ajax({
+            url: HOST + "/user/signUp",
+            method: "POST",
+            data: JSON.stringify(formData),
+            contentType: "application/json; charset=utf-8",
+            success:function(response){
+                if(response.error){ // 실패
+                    cbFailure(response.error);
+                }else{ // 성공
+                    cbSuccess();
+                }
+            }
+        });
+    }
+};

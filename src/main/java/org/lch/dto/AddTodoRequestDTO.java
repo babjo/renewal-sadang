@@ -12,6 +12,6 @@ public class AddTodoRequestDTO {
 
     @NotEmpty
     private String content;
-
+    private String category;
     private User user;
 }

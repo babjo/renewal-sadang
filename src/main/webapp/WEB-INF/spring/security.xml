@@ -8,8 +8,8 @@
 	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="security"/>
-    <security:http pattern="/signIn" security="none"/>
-    <security:http pattern="/signUp" security="none"/>
+    <security:http pattern="/user/signIn" security="none"/>
+    <security:http pattern="/user/signUp" security="none"/>
 
     <security:http pattern="/api/**" entry-point-ref="restAuthenticationEntryPoint" create-session="stateless">
         <security:csrf disabled="true"/>

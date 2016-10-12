@@ -249,6 +249,7 @@ function renderPage() {
     renderTodoList();
     bindEvent();
 }
+
 $( document ).ready(function(){
     initStore(function(){
         renderPage();
