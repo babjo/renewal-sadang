@@ -33,11 +33,19 @@ public class TodoController {
         return new SuccessDTO();
     }
 
+    @RequestMapping(value = "/{todoId}", method= RequestMethod.POST)
+    public @ResponseBody SuccessDTO modifyTodo(@PathVariable long todoId, @RequestBody @Valid ModifyTodoRequest modifyTodoRequest){
+        modifyTodoRequest.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        modifyTodoRequest.setTodoId(todoId);
+        todoService.modifyTodo(modifyTodoRequest);
+        return new SuccessDTO();
+    }
+
     @RequestMapping(value = "/{todoId}", method= RequestMethod.DELETE)
-    public @ResponseBody SuccessDTO removeTodo(@PathVariable String todoId){
+    public @ResponseBody SuccessDTO removeTodo(@PathVariable long todoId){
         RemoveTodoRequestDTO removeTodoRequestDTO = new RemoveTodoRequestDTO();
         removeTodoRequestDTO.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        removeTodoRequestDTO.setTodoId(Integer.parseInt(todoId));
+        removeTodoRequestDTO.setTodoId(todoId);
         todoService.removeTodo(removeTodoRequestDTO);
         return new SuccessDTO();
     }

@@ -1,10 +1,7 @@
 package org.lch.service;
 
 import org.lch.domain.Todo;
-import org.lch.dto.AddTodoRequestDTO;
-import org.lch.dto.GetTodoListRequestDTO;
-import org.lch.dto.GetTodoListResponseDTO;
-import org.lch.dto.RemoveTodoRequestDTO;
+import org.lch.dto.*;
 import org.lch.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,5 +34,9 @@ public class TodoService {
 
     public void removeTodo(RemoveTodoRequestDTO removeTodoRequestDTO) {
         todoRepository.delete(removeTodoRequestDTO.getUser(), removeTodoRequestDTO.getTodoId());
+    }
+
+    public void modifyTodo(ModifyTodoRequest modifyTodoRequest) {
+        todoRepository.update(modifyTodoRequest.getUser(), modifyTodoRequest.getTodoId(), modifyTodoRequest.getContent(), modifyTodoRequest.getCategory());
     }
 }

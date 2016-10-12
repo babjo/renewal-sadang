@@ -41,10 +41,19 @@ public class TodoRepository {
         return query.getResultList();
     }
 
-    public void delete(User user, int todoId) {
+    public void delete(User user, long todoId) {
         Todo todo = new Todo();
         todo.setId(todoId);
         todo.setUser(user);
         currentSession().delete(todo);
+    }
+
+    public void update(User user, long todoId, String content, String category) {
+        Todo todo = new Todo();
+        todo.setId(todoId);
+        todo.setUser(user);
+        todo.setCategory(category);
+        todo.setContent(content);
+        currentSession().update(todo);
     }
 }
