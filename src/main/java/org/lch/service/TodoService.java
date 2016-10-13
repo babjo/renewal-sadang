@@ -25,13 +25,13 @@ public class TodoService {
         todo.setCreateAt(new Date());
         todo.setContent(addTodoRequestDTO.getContent());
         todo.setUser(addTodoRequestDTO.getUser());
-        todo.setCategory(addTodoRequestDTO.getCategory());
+        todo.setCategory(addTodoRequestDTO.getCategory()!=null ? addTodoRequestDTO.getCategory().toUpperCase() : addTodoRequestDTO.getCategory());
         todoRepository.save(todo);
     }
 
     public GetTodoListResponseDTO getTodoList(GetTodoListRequestDTO getTodoListRequestDTO) {
         List<Todo> todoList;
-        if(getTodoListRequestDTO.getCategory() == null)
+        if(getTodoListRequestDTO.getCategory() == null || "TOTAL".equalsIgnoreCase(getTodoListRequestDTO.getCategory()))
             todoList = todoRepository.findByUser(getTodoListRequestDTO.getUser());
         else
             todoList = todoRepository.findByUserAndCategory(getTodoListRequestDTO.getUser(), getTodoListRequestDTO.getCategory());
@@ -42,7 +42,9 @@ public class TodoService {
         todoRepository.delete(removeTodoRequestDTO.getUser(), removeTodoRequestDTO.getTodoId());
     }
 
-    public void modifyTodo(ModifyTodoRequest modifyTodoRequest) {
-        todoRepository.update(modifyTodoRequest.getUser(), modifyTodoRequest.getTodoId(), modifyTodoRequest.getContent(), modifyTodoRequest.getCategory());
+    public void modifyTodo(ModifyTodoRequestDTO modifyTodoRequestDTO) {
+        if(modifyTodoRequestDTO.getCategory() != null)
+            modifyTodoRequestDTO.setCategory(modifyTodoRequestDTO.getCategory().toUpperCase());
+        todoRepository.update(modifyTodoRequestDTO);
     }
 }

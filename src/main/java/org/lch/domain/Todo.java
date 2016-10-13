@@ -22,10 +22,14 @@ public class Todo {
     private long id;
     private String content;
     private String category;
+
     private Date createAt;
 
-    public Todo(long id, String content, String category, Date createAt){
-        this(id, content, category, createAt, null);
+    private boolean completed;
+    private boolean bookmarked;
+
+    public Todo(long id, String content, String category, Date createAt, boolean completed, boolean bookmarked){
+        this(id, content, category, createAt, completed, bookmarked, null);
     }
 
     @ManyToOne

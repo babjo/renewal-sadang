@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.lch.domain.Todo;
 import org.lch.domain.User;
+import org.lch.dto.ModifyTodoRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,13 +30,13 @@ public class TodoRepository {
     }
 
     public List<Todo> findByUser(User user) {
-        Query query = currentSession().createQuery("select NEW org.lch.domain.Todo(t.id, t.content, t.category, t.createAt) from Todo as t where t.user = :user");
+        Query query = currentSession().createQuery("select NEW org.lch.domain.Todo(t.id, t.content, t.category, t.createAt, t.completed, t.bookmarked) from Todo as t where t.user = :user");
         query.setParameter("user", user);
         return query.getResultList();
     }
 
     public List<Todo> findByUserAndCategory(User user, String category) {
-        Query query = currentSession().createQuery("select NEW org.lch.domain.Todo(t.id, t.content, t.category, t.createAt) from Todo as t where t.user = :user and t.category = :category");
+        Query query = currentSession().createQuery("select NEW org.lch.domain.Todo(t.id, t.content, t.category, t.createAt, t.completed, t.bookmarked) from Todo as t where t.user = :user and t.category = :category");
         query.setParameter("user", user);
         query.setParameter("category", category);
         return query.getResultList();
@@ -48,12 +49,16 @@ public class TodoRepository {
         currentSession().delete(todo);
     }
 
-    public void update(User user, long todoId, String content, String category) {
-        Todo todo = new Todo();
-        todo.setId(todoId);
-        todo.setUser(user);
-        todo.setCategory(category);
-        todo.setContent(content);
+    public void update(ModifyTodoRequestDTO modifyTodoRequestDTO) {
+        Todo todo = currentSession().get(Todo.class, modifyTodoRequestDTO.getTodoId());
+        if(todo.getUser().getId() != modifyTodoRequestDTO.getUser().getId())
+            throw new IllegalStateException("접근 권한이 없습니다.");
+
+        todo.setId(modifyTodoRequestDTO.getTodoId());
+        if(modifyTodoRequestDTO.getCategory() != null) todo.setCategory(modifyTodoRequestDTO.getCategory());
+        if(modifyTodoRequestDTO.getContent() != null) todo.setContent(modifyTodoRequestDTO.getContent());
+        if(modifyTodoRequestDTO.getCompleted() != null) todo.setCompleted(modifyTodoRequestDTO.getCompleted());
+        if(modifyTodoRequestDTO.getBookmarked() != null) todo.setBookmarked(modifyTodoRequestDTO.getBookmarked());
         currentSession().update(todo);
     }
 }

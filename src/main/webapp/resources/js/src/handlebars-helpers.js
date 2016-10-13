@@ -11,14 +11,14 @@ Handlebars.registerHelper('icon', function(val, block) {
         default : return "fa-list-ul";
     }
 });
-Handlebars.registerHelper('starred', function(conditional, options) {
-    if(conditional == 1)
+Handlebars.registerHelper('starred', function(bookmarked, options) {
+    if(bookmarked)
         return "starred";
     else
         return "";
 });
-Handlebars.registerHelper('completed', function(conditional, options) {
-    if(conditional == 1)
+Handlebars.registerHelper('isCompleted', function(completed, options) {
+    if(completed)
         return "completed";
     else
         return "";

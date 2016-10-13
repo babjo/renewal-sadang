@@ -2,19 +2,13 @@ package org.lch.controller;
 
 import org.lch.domain.User;
 import org.lch.dto.*;
-import org.lch.exception.FailedLoginException;
 import org.lch.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import sun.security.provider.Sun;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Created by LCH on 2016. 10. 11..
@@ -34,10 +28,10 @@ public class TodoController {
     }
 
     @RequestMapping(value = "/{todoId}", method = RequestMethod.POST)
-    public @ResponseBody SuccessDTO modifyTodo(@PathVariable long todoId, @RequestBody @Valid ModifyTodoRequest modifyTodoRequest){
-        modifyTodoRequest.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        modifyTodoRequest.setTodoId(todoId);
-        todoService.modifyTodo(modifyTodoRequest);
+    public @ResponseBody SuccessDTO modifyTodo(@PathVariable long todoId, @RequestBody @Valid ModifyTodoRequestDTO modifyTodoRequestDTO){
+        modifyTodoRequestDTO.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        modifyTodoRequestDTO.setTodoId(todoId);
+        todoService.modifyTodo(modifyTodoRequestDTO);
         return new SuccessDTO();
     }
 

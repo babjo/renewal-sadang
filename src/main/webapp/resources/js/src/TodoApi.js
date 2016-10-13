@@ -48,59 +48,19 @@ var TodoApi = {
             }
         });
     },
-
-    update: function(args, cbSuccess, cbError){
-        var self = this;
-        if(args === undefined || !args.contents){
-            cbError('새로운 내용을 입력해야 합니다');
-            return ;
-        }
-        if(!args.todo_seq){
-            cbError('없는 id');
-            return ;
-        }
-        //var data = { contents: args.contents, category_seq: args.categorySeq };
+    remove: function(args, cbSuccess, cbFailure){
         $.ajax({
-            type: "POST",
-            url: "./updateTodo",
-            data: {'modify_todo':JSON.stringify(args)},
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            success: function(data) {
-                self.getData(function(data){
-                    Store.data = data;
-                    cbSuccess();
-                }, function(){});
-
-            },
-            error:function(request, status, error){
-                //console.log(status);
-                cbError();
-            }
-        });
-    },
-    remove: function(args, cbSuccess, cbError){
-        var self = this;
-        $.ajax({
+            beforeSend: setAuthHeader,
+            url: HOST + "/api/todo/" + args.todoId,
             method: "DELETE",
-            url: "./rest/todo/" + args.todo_seq,
-            success: function(data) {
-                self.getData(function(data){
-                    Store.data = data;
-                    cbSuccess();
-                }, function(){});
-
-            },
-            error:function(request, status, error){
-                console.log(status);
-                cbError();
+            data: args,
+            success:function(response){
+                if(response.error){
+                    cbFailure(response.error);
+                }else{
+                    cbSuccess(response.data);
+                }
             }
-        });
-    },
-    getData: function(cbSuccess, cbError){
-        $.get("./todo.json", function(data) {
-            cbSuccess(data);
-        }).fail(function() {
-            cbError();
         });
     },
     get: function(args, cbSuccess, cbFailure){
@@ -123,20 +83,16 @@ var TodoApi = {
 function arrange(target){
     var result = {};
     $.each(target.todoList, function(index, todo){
-        console.log(todo.createAt);
         var createAt = moment.unix(todo.createAt/1000).format("YYYY/MM/DD");
         if(_.has(result, createAt)){
-            result[createAt].unshift({content : todo.content});
+            result[createAt].unshift(todo);
         }else{
-            result[createAt] = [{content : todo.content}];
+            result[createAt] = [todo];
         }
     });
-
-    console.log(result);
     var data = [];
     $.each(result, function(createAt, todoList) {
         var momentDate = moment(createAt, "YYYY/MM/DD");
-        console.log(momentDate);
         data.unshift({date: {dayOfWeek: momentDate.format('dddd'), fullDate: momentDate.format('MMMM DD, YYYY')}, todoList: todoList});
     });
 

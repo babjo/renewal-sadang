@@ -86,7 +86,7 @@
                     <input type="text" class="form-control" id="todo-content-js" placeholder="insert new task...">
                 </div>
                 <div class="col-xs-2">
-                    <button class="btn btn-primary sadang-btn add-todo-btn-js">추가</button>
+                    <button id=add-todo-btn-js class="btn btn-primary sadang-btn">추가</button>
                 </div>
             </div>
             <div class="row">
@@ -158,17 +158,17 @@
             <p class="details">{{date.fullDate}}</p>
             <ul class="todo">
                 {{#each todoList}}
-                <li class="clearfix {{completed complete}}">
+                <li class="clearfix {{isCompleted completed}}">
                     <div class="content">{{content}}</div>
-                    <input type="hidden" id="todoId" value="{{todoId}}">
-                    <input type="hidden" id="bookmark" value="{{bookmark}}">
-                    <input type="hidden" id="complete" value="{{complete}}">
+                    <input type="hidden" id="todoId" value="{{id}}">
+                    <input type="hidden" id="bookmarked" value="{{bookmarked}}">
+                    <input type="hidden" id="completed" value="{{completed}}">
                     <div class="status-wrapper status-wrapper-js">
                         <div class="status is-Transformed" data-toggle="tooltip" title="completed?"></div>
                     </div>
                     <div class="trash-wrapper trash-wrapper-js"><i class="fa fa-trash fa-2x" aria-hidden="true" data-toggle="tooltip" title="delete?"></i>
                     </div>
-                    <div class="star-wrapper star-wrapper-js {{starred bookmark}}"><i class="fa fa-star fa-2x" aria-hidden="true" data-toggle="tooltip" title="bookmark?"></i>
+                    <div class="star-wrapper star-wrapper-js {{starred bookmarked}}"><i class="fa fa-star fa-2x" aria-hidden="true" data-toggle="tooltip" title="bookmark?"></i>
                     </div>
                 </li>
                 <hr>

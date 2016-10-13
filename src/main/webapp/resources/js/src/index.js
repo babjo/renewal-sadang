@@ -50,6 +50,30 @@ function renderTodoPage(){
     var html = template();
     $('#sadang').html(html);
 
+    // Add Todo
+    $('#add-todo-btn-js').click(function (e) {
+        e.preventDefault();
+        var content = $('#todo-content-js').val();
+        TodoApi.add({content: content, category: localStorage.getItem('current')}, function (data) {
+            refreshTodoList();
+            $('#todo-content-js').val('');
+        }, function (error) {
+            alert(error.message);
+        });
+    });
+
+    $("#todo-content-js").keypress(function (e) {
+        if (e.keyCode == 13) {
+            var content = $('#todo-content-js').val();
+            TodoApi.add({content: content, category: localStorage.getItem('current')}, function (data) {
+                refreshTodoList();
+                $('#todo-content-js').val('');
+            }, function (error) {
+                alert(error.message);
+            });
+        }
+    });
+
     renderSidebarCmp();
     renderTodoListCmp();
 
@@ -75,26 +99,106 @@ function renderSidebarCmp() {
 }
 
 function renderTodoListCmp() {
-    var source = $("#todolist-template").html();
-    var template = Handlebars.compile(source);
-
-    refreshTodoList(template);
-
-    $('.add-todo-btn-js').click(function(e){
-        e.preventDefault();
-        var content = $('#todo-content-js').val();
-        TodoApi.add({content : content, category : localStorage.getItem('current')}, function(data){
-            refreshTodoList();
-        }, function(error){
-        });
-    });
+    refreshTodoList();
 }
 
-function refreshTodoList(template) {
+function refreshTodoList() {
+    var source = $("#todolist-template").html();
+    var template = Handlebars.compile(source);
     TodoApi.get({category: localStorage.getItem('current')}, function (data) {
         var html = template({data: data});
         $('.total-todolist').html(html);
+        bindTodoEvents();
     }, function (error) {
         alert(error.message);
+    });
+}
+
+function bindTodoEvents() {
+
+    // Remove Todo
+    $(".trash-wrapper-js").click(function(event){
+        var todoId = $(event.target).parent().siblings('#todoId').val();
+        TodoApi.remove({
+            todoId: todoId
+        }, function (data) {
+            refreshTodoList();
+        }, function (error) {
+            console.log(error);
+        });
+    });
+
+    // Modify the content of Todo
+    $(".todo .content").click(function (event) {
+        var self = $(event.target);
+        var text = self.text();
+
+        var editElement = $('<input type="text" class="form-control" value="' + text + '">');
+        editElement.keypress(function (e) {
+            if (e.keyCode == 13) {
+                var newContents = $(this).val();
+                var todoId = $(this).parent().siblings('#todoId').val();
+                TodoApi.modify({
+                    content: newContents,
+                    todoId: todoId,
+                    category: localStorage.getItem('current')
+                }, function () {
+                    refreshTodoList();
+                }, function (error) {
+                    console.log(error);
+                });
+            }
+        });
+        self.html(editElement);
+
+        editElement.focus();
+        editElement.putCursorAtEnd();
+        editElement.focusout(function () {
+            var newContents = $(this).val();
+            var todoId = $(this).parent().siblings('#todoId').val();
+            TodoApi.modify({
+                content: newContents,
+                todoId: todoId,
+                category: localStorage.getItem('current')
+            }, function () {
+                refreshTodoList();
+            }, function (error) {
+                console.log(error);
+            });
+        });
+    });
+
+    // Bookmark Todo
+    $(".star-wrapper-js").click(function (event) {
+        var todoId = $(this).siblings('#todoId').val();
+        var bookmarked = $(this).siblings('#bookmarked').val();
+        var content = $(this).siblings('.content').text();
+        if(bookmarked == 'true') bookmarked = false; else bookmarked = true;
+        TodoApi.modify({
+            todoId: todoId,
+            bookmarked: bookmarked,
+            content : content
+        }, function () {
+            refreshTodoList();
+        }, function (error) {
+            console.log(error);
+        });
+    });
+
+    // Complete Todo
+    $(".status-wrapper-js").click(function (event) {
+        var todoId = $(this).siblings('#todoId').val();
+        var content = $(this).siblings('.content').text();
+        var completed = $(this).siblings('#completed').val();
+        if(completed == 'true') completed = false; else completed = true;
+        TodoApi.modify({
+            todoId: todoId,
+            completed: completed,
+            content : content
+        }, function () {
+            refreshTodoList();
+        }, function (error) {
+            console.log(error);
+        });
     });
 }
