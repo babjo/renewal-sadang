@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,11 +31,7 @@ public class TodoService {
     }
 
     public GetTodoListResponseDTO getTodoList(GetTodoListRequestDTO getTodoListRequestDTO) {
-        List<Todo> todoList;
-        if(getTodoListRequestDTO.getCategory() == null || "TOTAL".equalsIgnoreCase(getTodoListRequestDTO.getCategory()))
-            todoList = todoRepository.findByUser(getTodoListRequestDTO.getUser());
-        else
-            todoList = todoRepository.findByUserAndCategory(getTodoListRequestDTO.getUser(), getTodoListRequestDTO.getCategory());
+        List<Todo> todoList = todoRepository.find(getTodoListRequestDTO);
         return new GetTodoListResponseDTO(todoList);
     }
 
@@ -46,5 +43,26 @@ public class TodoService {
         if(modifyTodoRequestDTO.getCategory() != null)
             modifyTodoRequestDTO.setCategory(modifyTodoRequestDTO.getCategory().toUpperCase());
         todoRepository.update(modifyTodoRequestDTO);
+    }
+
+    public GetCategoryListResponseDTO getCategoryList(GetCategoryListRequestDTO getCategoryListRequestDTO) {
+        GetTodoListRequestDTO getTodoListRequestDTO = new GetTodoListRequestDTO();
+        getTodoListRequestDTO.setUser(getCategoryListRequestDTO.getUser());
+        List<Todo> todoList = todoRepository.find(getTodoListRequestDTO);
+        List<String> categoryList = new ArrayList();
+        for (Todo todo : todoList){
+            if(todo.getCategory()!=null && !"".equals(todo.getCategory()) && !containsCaseInsensitive(todo.getCategory(), categoryList))
+                categoryList.add(todo.getCategory());
+        }
+        return new GetCategoryListResponseDTO(categoryList);
+    }
+
+    private boolean containsCaseInsensitive(String s, List<String> l){
+        for (String string : l){
+            if (string.equalsIgnoreCase(s)){
+                return true;
+            }
+        }
+        return false;
     }
 }

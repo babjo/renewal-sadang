@@ -1,15 +1,8 @@
 Handlebars.registerHelper('active', function(a, b, options) {
-    if(a==b)
+    if(a.toUpperCase()==b.toUpperCase())
         return "active";
     else
         return "";
-});
-Handlebars.registerHelper('icon', function(val, block) {
-    switch(val){
-        case "Bookmark" : return "fa-star";
-        case "Done" : return "fa-thumbs-up";
-        default : return "fa-list-ul";
-    }
 });
 Handlebars.registerHelper('starred', function(bookmarked, options) {
     if(bookmarked)

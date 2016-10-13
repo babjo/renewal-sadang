@@ -38,9 +38,9 @@
                     <h1 class="form-signin-heading">Sadang</h1>
                     <p class="form-signin-description">당신의 일정을 관리하고 더 나은 삶을 살아보세요 !</p>
                     <label class="sr-only">Email</label>
-                    <input type="email" name="user_email" id="signin-email" class="form-control" placeholder="Email" required autofocus value="kd980311@naver.com">
+                    <input type="email" name="user_email" id="signin-email" class="form-control" placeholder="Email" required autofocus>
                     <label class="sr-only">Password</label>
-                    <input type="password" name="user_passwd" id="signin-passwd" class="form-control" placeholder="Password" required value="1234">
+                    <input type="password" name="user_passwd" id="signin-passwd" class="form-control" placeholder="Password" required>
                     <button class="btn btn-lg btn-primary btn-block sadang-btn" id="signin-js" >sign in</button>
                     <p><a id="go-signup-page-js" href="#">아직 회원이 아니시라면...</a></p>
                 </div>
@@ -114,10 +114,11 @@
             </div>
             <div class="modal-body">
                 <form role="form">
+                    <!--
                     <div class="form-group">
                         <label class="radio-inline"><input id="addNewCategory" type="radio" name="optradio" checked>New</label>
                         <label class="radio-inline"><input id="addSharedCategory" type="radio" name="optradio">Sharing Code</label>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <input type="text" id="addCategoryText" class="form-control">
                     </div>
@@ -125,7 +126,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-default btn-primary sadang-btn add-category-js">만들기</button>
+                <button type="button" class="btn btn-default btn-primary sadang-btn" id="add-category-js">만들기</button>
             </div>
         </div>
 
@@ -140,13 +141,22 @@
         </a>
         <a class="settings" href="#" id="signout-js">sign out</a>
     </li>
-    {{#each categories}}
     <li>
-        <a class="{{active name ../current}} go-to-category-js" data-category={{name}} href="#"><span class="icon"><i class="fa {{icon name}} fa-1" aria-hidden="true"></i></span><span class="category">{{name}}</span></a>
+        <a class="{{active 'TOTAL' current}} go-to-total-js" href="#"><span class="icon"><i class="fa fa-list-ul fa-1" aria-hidden="true"></i></span><span class="category">Total</span></a>
+    </li>
+    <li>
+        <a class="{{active 'BOOKMARK' current}} go-to-bookmark-js" href="#"><span class="icon"><i class="fa fa-star fa-1" aria-hidden="true"></i></span><span class="category">Bookmark</span></a>
+    </li>
+    <li>
+        <a class="{{active 'COMPLETED' current}} go-to-completed-js" href="#"><span class="icon"><i class="fa fa-thumbs-up fa-1" aria-hidden="true"></i></span><span class="category">Completed</span></a>
+    </li>
+    {{#each categoryList}}
+    <li>
+        <a class="{{active name ../current}} go-to-category-js" data-category={{name}} href="#"><span class="icon"><i class="fa fa-list-ul fa-1" aria-hidden="true"></i></span><span class="category">{{name}}</span></a>
     </li>
     {{/each}}
     <li>
-        <a class="add-category add-category-modal-js" href="#"><i class="fa fa-plus fa-1" aria-hidden="true"></i></a>
+        <a class="add-category" id="add-category-modal-js" href="#"><i class="fa fa-plus fa-1" aria-hidden="true"></i></a>
     </li>
 </script>
 
@@ -212,6 +222,6 @@
 <script src="/resources/js/src/handlebars-helpers.js" type="text/javascript"></script>
 <script src="/resources/js/src/UserApi.js" type="text/javascript"></script>
 <script src="/resources/js/src/TodoApi.js" type="text/javascript"></script>
-<script src="/resources/js/src/Store.js" type="text/javascript"></script>
+<script src="/resources/js/src/CategoryApi.js" type="text/javascript"></script>
 <script src="/resources/js/src/index.js" type="text/javascript"></script>
 </html>

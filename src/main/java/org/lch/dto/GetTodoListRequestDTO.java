@@ -10,4 +10,6 @@ import org.lch.domain.User;
 public class GetTodoListRequestDTO {
     private User user;
     private String category;
+    private Boolean bookmarked;
+    private Boolean completed;
 }

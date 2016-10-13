@@ -4,10 +4,6 @@ var TodoApi = {
             cbFailure({message:'내용을 입력해야 합니다'});
             return ;
         }
-        if(!args.category){
-            cbFailure({message:'카테고리가 없어'});
-            return ;
-        }
         $.ajax({
             beforeSend: setAuthHeader,
             type: "POST",

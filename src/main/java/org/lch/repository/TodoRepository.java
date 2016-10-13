@@ -5,10 +5,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.lch.domain.Todo;
 import org.lch.domain.User;
+import org.lch.dto.GetTodoListRequestDTO;
 import org.lch.dto.ModifyTodoRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
@@ -29,19 +34,6 @@ public class TodoRepository {
         currentSession().save(todo);
     }
 
-    public List<Todo> findByUser(User user) {
-        Query query = currentSession().createQuery("select NEW org.lch.domain.Todo(t.id, t.content, t.category, t.createAt, t.completed, t.bookmarked) from Todo as t where t.user = :user");
-        query.setParameter("user", user);
-        return query.getResultList();
-    }
-
-    public List<Todo> findByUserAndCategory(User user, String category) {
-        Query query = currentSession().createQuery("select NEW org.lch.domain.Todo(t.id, t.content, t.category, t.createAt, t.completed, t.bookmarked) from Todo as t where t.user = :user and t.category = :category");
-        query.setParameter("user", user);
-        query.setParameter("category", category);
-        return query.getResultList();
-    }
-
     public void delete(User user, long todoId) {
         Todo todo = new Todo();
         todo.setId(todoId);
@@ -60,5 +52,33 @@ public class TodoRepository {
         if(modifyTodoRequestDTO.getCompleted() != null) todo.setCompleted(modifyTodoRequestDTO.getCompleted());
         if(modifyTodoRequestDTO.getBookmarked() != null) todo.setBookmarked(modifyTodoRequestDTO.getBookmarked());
         currentSession().update(todo);
+    }
+
+    public List<Todo> find(GetTodoListRequestDTO getTodoListRequestDTO) {
+
+        //Get Criteria Builder
+        CriteriaBuilder builder = currentSession().getCriteriaBuilder();
+
+        //Create Criteria
+        CriteriaQuery<Todo> criteria = builder.createQuery(Todo.class);
+        Root<Todo> todoRoot = criteria.from(Todo.class);
+
+        Predicate restrictions = builder.equal(todoRoot.get("user"), getTodoListRequestDTO.getUser());
+        criteria.where(restrictions);
+
+        if(getTodoListRequestDTO.getCategory() != null) {
+            restrictions = builder.equal(todoRoot.get("category"), getTodoListRequestDTO.getCategory());
+            criteria.where(restrictions);
+        }
+        if(getTodoListRequestDTO.getBookmarked() != null) {
+            restrictions = builder.equal(todoRoot.get("bookmarked"), getTodoListRequestDTO.getBookmarked());
+            criteria.where(restrictions);
+        }
+        if(getTodoListRequestDTO.getCompleted() != null) {
+            restrictions = builder.equal(todoRoot.get("completed"), getTodoListRequestDTO.getCompleted());
+            criteria.where(restrictions);
+        }
+
+        return currentSession().createQuery(criteria).getResultList();
     }
 }

@@ -1,23 +1,16 @@
 var CategoryApi = {
-    createNew: function(args, cbSuccess, cbError){
-        if(args === undefined || !args.category_name){
-            cbError('내용을 입력해야 합니다');
-            return ;
-        }
-
+    get: function(args, cbSuccess, cbFailure){
         $.ajax({
-            type: "POST",
-            url: "./rest/category",
+            beforeSend: setAuthHeader,
+            url: HOST + "/api/category",
+            method: "GET",
             data: args,
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            success: function(data) {
-                TodoApi.getData(function(data){
-                    Store.data = data;
-                    cbSuccess();
-                });
-            },
-            error:function(request, status, error){
-                cbError();
+            success:function(response){
+                if(response.error){
+                    cbFailure(response.error);
+                }else{
+                    cbSuccess(response.data);
+                }
             }
         });
     },
@@ -48,3 +41,7 @@ var CategoryApi = {
         Store.currentCategorySeq = categorySeq;
     }
 };
+
+function setAuthHeader(request) {
+    request.setRequestHeader("Authorization", 'Bearer '+localStorage.getItem('token'));
+}
