@@ -198,7 +198,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" type="text/javascript"></script>
 <script>
     // config
-    var dev = false;
+    var dev = true;
     var HOST = 'http://52.78.187.179:8080/todo';
     if(dev) HOST = 'http://localhost:8080';
 
