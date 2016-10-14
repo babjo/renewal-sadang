@@ -11,12 +11,12 @@
 
     <title>Signin for Sandang</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/resources/js/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/resources/js/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/resources/less/style.less" type="text/css" rel="stylesheet/less">
+    <link href="resources/less/style.less" type="text/css" rel="stylesheet/less">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -189,19 +189,23 @@
     </div>
 </script>
 
-<script src="/resources/js/node_modules/less/dist/less.min.js" type="text/javascript"></script>
-<script src="/resources/js/node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
-<script src="/resources/js/node_modules/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="/resources/js/node_modules/handlebars/dist/handlebars.min.js" type="text/javascript"></script>
-<script src="/resources/js/node_modules/moment/min/moment.min.js" type="text/javascript"></script>
-<script src="/resources/js/node_modules/underscore/underscore-min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.1/less.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" type="text/javascript"></script>
 <script>
     // config
-    var HOST = 'http://localhost:8080';
+    var dev = false;
+    var HOST = 'http://52.78.187.179:8080/todo';
+    if(dev) HOST = 'http://localhost:8080';
+
     // helper
     jQuery.fn.putCursorAtEnd = function() {
         return this.each(function() {
-            $(this).focus()
+            $(this).focus();
             // If this function exists...
             if (this.setSelectionRange) {
                 // ... then use it (Doesn't work in IE)
@@ -219,9 +223,9 @@
         });
     };
 </script>
-<script src="/resources/js/src/handlebars-helpers.js" type="text/javascript"></script>
-<script src="/resources/js/src/UserApi.js" type="text/javascript"></script>
-<script src="/resources/js/src/TodoApi.js" type="text/javascript"></script>
-<script src="/resources/js/src/CategoryApi.js" type="text/javascript"></script>
-<script src="/resources/js/src/index.js" type="text/javascript"></script>
+<script src="resources/js/src/handlebars-helpers.js" type="text/javascript"></script>
+<script src="resources/js/src/UserApi.js" type="text/javascript"></script>
+<script src="resources/js/src/TodoApi.js" type="text/javascript"></script>
+<script src="resources/js/src/CategoryApi.js" type="text/javascript"></script>
+<script src="resources/js/src/index.js" type="text/javascript"></script>
 </html>

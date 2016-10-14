@@ -2,6 +2,7 @@ package security;
 
 import org.lch.domain.User;
 import org.lch.exception.JwtTokenMalformedException;
+import org.lch.service.JwtUtil;
 import org.lch.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

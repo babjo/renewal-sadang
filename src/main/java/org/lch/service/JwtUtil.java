@@ -1,4 +1,4 @@
-package security;
+package org.lch.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
