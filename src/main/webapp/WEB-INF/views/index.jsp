@@ -38,9 +38,9 @@
                     <h1 class="form-signin-heading">Sadang</h1>
                     <p class="form-signin-description">당신의 일정을 관리하고 더 나은 삶을 살아보세요 !</p>
                     <label class="sr-only">Email</label>
-                    <input type="email" name="user_email" id="signin-email" class="form-control" placeholder="Email" required autofocus>
+                    <input type="email" name="user_email" id="signin-email" class="form-control" placeholder="Email" required autofocus value="test@test.com">
                     <label class="sr-only">Password</label>
-                    <input type="password" name="user_passwd" id="signin-passwd" class="form-control" placeholder="Password" required>
+                    <input type="password" name="user_passwd" id="signin-passwd" class="form-control" placeholder="Password" required value="1234">
                     <button class="btn btn-lg btn-primary btn-block sadang-btn" id="signin-js" >sign in</button>
                     <p><a id="go-signup-page-js" href="#">아직 회원이 아니시라면...</a></p>
                 </div>
